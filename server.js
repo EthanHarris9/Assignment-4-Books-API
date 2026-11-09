@@ -57,6 +57,12 @@ app.get('/', (req, res) => {
     }); 
 });
 
+// GET /books - Return all Books
+app.get('/books', (req, res) => {
+      // Sends back the books as JSON as the response to the request
+      res.json(books);
+});
+
 
 
 
