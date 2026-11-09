@@ -32,6 +32,15 @@ let books = [
     'DELETE /api/books/:id': 'Delete a book'
 */
 
+// Creating the express server
+const express = require('express');
+const app = express();
+// Starts server on port 3,000
+const port = 3000;
+
+// Middleware to parse JSON requests
+app.use(express.json());
+
 
 
 
