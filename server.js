@@ -41,6 +41,21 @@ const port = 3000;
 // Middleware to parse JSON requests
 app.use(express.json());
 
+// Start the server
+app.listen(port, () => {
+    console.log(`Book API server running at http://localhost:${port}`);
+});
+
+// Root endpoint - API homepage
+app.get('/', (req, res) => {
+    res.json({ 
+        message: "Welcome to the Book API", 
+        endpoints: { 
+            "GET /books": "Get all books", 
+            "GET /books/:id": "Get a specific book by ID" 
+        } 
+    }); 
+});
 
 
 
