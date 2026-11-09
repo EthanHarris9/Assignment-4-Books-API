@@ -63,6 +63,19 @@ app.get('/books', (req, res) => {
       res.json(books);
 });
 
+// GET /books/:id - Return a specific book by ID
+app.get('/books/:id', (req, res) => {
+    const bookId = parseInt(req.params.id);
+    const book = books.find(b => b.id === bookId);
+  
+	// Return book if it is found
+    if (book) {
+        res.json(book);
+    } else {
+        res.status(404).json({ error: 'Book not found' });
+    }
+});
+
 
 
 
