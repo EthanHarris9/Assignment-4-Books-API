@@ -43,11 +43,11 @@ app.use(express.json());
 
 // Start the server
 app.listen(port, () => {
-    console.log(`Book API server running at http://localhost:${port}`);
+    console.log(`Book API server running at http://localhost:${port}/api`);
 });
 
 // Root endpoint - API homepage
-app.get('/', (req, res) => {
+app.get('/api', (req, res) => {
     res.json({ 
         message: "Welcome to the Book API", 
         endpoints: { 
@@ -58,13 +58,13 @@ app.get('/', (req, res) => {
 });
 
 // GET /books - Return all Books
-app.get('/books', (req, res) => {
+app.get('/api/books', (req, res) => {
       // Sends back the books as JSON as the response to the request
       res.json(books);
 });
 
 // GET /books/:id - Return a specific book by ID
-app.get('/books/:id', (req, res) => {
+app.get('/api/books/:id', (req, res) => {
     const bookId = parseInt(req.params.id);
     const book = books.find(b => b.id === bookId);
   
@@ -77,7 +77,7 @@ app.get('/books/:id', (req, res) => {
 });
 
 // POST /books - Create a new book
-app.post('/books', (req, res) => {
+app.post('/api/books', (req, res) => {
     // Extract data from request body
     const { title, author, genre, copiesAvailable } = req.body;
   
@@ -98,7 +98,7 @@ app.post('/books', (req, res) => {
 });
 
 // PUT /books/:id - Update an existing book
-app.put('/books/:id', (req, res) => {
+app.put('/api/books/:id', (req, res) => {
     const bookId = parseInt(req.params.id);
     const { title, author, genre, copiesAvailable } = req.body;
   
@@ -123,7 +123,7 @@ app.put('/books/:id', (req, res) => {
 });
 
 // DELETE /books/:id - Delete a book
-app.delete('/books/:id', (req, res) => {
+app.delete('/api/books/:id', (req, res) => {
     const bookId = parseInt(req.params.id);
   
     // Find the book index
