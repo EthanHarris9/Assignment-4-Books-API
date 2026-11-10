@@ -122,6 +122,24 @@ app.put('/books/:id', (req, res) => {
     res.json(books[bookIndex]);
 });
 
+// DELETE /books/:id - Delete a book
+app.delete('/books/:id', (req, res) => {
+    const bookId = parseInt(req.params.id);
+  
+    // Find the book index
+    const bookIndex = books.findIndex(b => b.id === bookId);
+  
+    if (bookIndex === -1) {
+        return res.status(404).json({ error: 'Book not found' });
+    }
+  
+    // Remove the book from array
+    const deletedBook = books.splice(bookIndex, 1)[0];
+  
+    // Return the deleted book
+    res.json({ message: 'Book deleted successfully', book: deletedBook });
+});
+
 
 
 
