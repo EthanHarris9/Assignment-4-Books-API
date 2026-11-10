@@ -58,6 +58,12 @@ describe('Book API', () => {
         expect(response.status).toBe(200);
         expect(response.body.copiesAvailable).toBe(1);
 });
+    // Test for DELETE
+    test('should delete existing book', async () => {
+    const response = await request(app).delete('/api/books/1');
 
+    expect(response.status).toBe(200);
+    expect(response.body).toHaveProperty('message');
+});
 
 });
