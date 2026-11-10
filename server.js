@@ -97,6 +97,30 @@ app.post('/books', (req, res) => {
     res.status(201).json(newBook);
 });
 
+// PUT /books/:id - Update an existing book
+app.put('/books/:id', (req, res) => {
+    const bookId = parseInt(req.params.id);
+    const { title, author, genre, copiesAvailable } = req.body;
+  
+    // Find the book to update
+    const bookIndex = books.findIndex(b => b.id === bookId);
+  
+    if (bookIndex === -1) {
+          return res.status(404).json({ error: 'Book not found' }); 
+    }
+  
+    // Update the book
+    books[bookIndex] = {
+        id: bookId,
+        title,
+        author,
+        genre,
+        copiesAvailable
+    };
+  
+    // Return the updated book
+    res.json(books[bookIndex]);
+});
 
 
 
