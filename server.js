@@ -76,7 +76,26 @@ app.get('/books/:id', (req, res) => {
     }
 });
 
-
+// POST /books - Create a new book
+app.post('/books', (req, res) => {
+    // Extract data from request body
+    const { title, author, genre, copiesAvailable } = req.body;
+  
+  	// Create a new book with generated ID
+    const newBook = {
+        id: books.length + 1,
+        title,
+        author,
+        genre,
+        copiesAvailable
+    };
+  
+    // Add to books array
+    books.push(newBook);
+  
+    // Return the created movie with 201 status
+    res.status(201).json(newBook);
+});
 
 
 
