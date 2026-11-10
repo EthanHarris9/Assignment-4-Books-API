@@ -41,10 +41,14 @@ const port = 3000;
 // Middleware to parse JSON requests
 app.use(express.json());
 
-// Start the server
-app.listen(port, () => {
+// Only start the server when running directly, not when testing
+if (require.main === module) {
+    app.listen(port, () => {
     console.log(`Book API server running at http://localhost:${port}/api`);
-});
+    });
+}
+
+module.exports = app;
 
 // Root endpoint - API homepage
 app.get('/api', (req, res) => {
@@ -139,10 +143,3 @@ app.delete('/api/books/:id', (req, res) => {
     // Return the deleted book
     res.json({ message: 'Book deleted successfully', book: deletedBook });
 });
-
-
-
-
-
-
-
