@@ -19,7 +19,7 @@ describe('Book API', () => {
     expect(response.body).toHaveProperty('id', 1);
     expect(response.body).toHaveProperty('title');
 });
-    test('should handle error when book ID is not found', async () => {
+    test('should handle error 404 when book ID is not found', async () => {
     const response = await request(app).get('/api/books/999');
   
     expect(response.status).toBe(404);
@@ -46,17 +46,33 @@ describe('Book API', () => {
     test('should update existing book', async () => {
     const updatedBook = {
         title: "The Great Gatsby",
-        author: "F. Scott Fitsgerald",
+        author: "F. Scott Fitzgerald",
         genre: "Fiction",
         copiesAvailable: 1
     };
 
     const response = await request(app)
-        .post('/api/books/1')
+        .put('/api/books/1')
         .send(updatedBook);
   
         expect(response.status).toBe(200);
         expect(response.body.copiesAvailable).toBe(1);
+});
+    // PUT test for 404 error
+    test('should return 404 when book to update does not exist', async () => {
+    const updatedBook = {
+        title: "The Great Gatsby",
+        author: "F. Scott Fitzgerald",
+        genre: "Fiction",
+        copiesAvailable: 1
+    };
+
+    const response = await request(app)
+        .put('/api/books/999')
+        .send(updatedBook);
+  
+        expect(response.status).toBe(404);
+        expect(response.body).toHaveProperty('error');
 });
     // Test for DELETE
     test('should delete existing book', async () => {
@@ -65,5 +81,12 @@ describe('Book API', () => {
     expect(response.status).toBe(200);
     expect(response.body).toHaveProperty('message');
 });
+    // DELETE test for 404 error
+    test('should return 404 when book to delete does not exist', async () => {
+    const response = await request(app).delete('/api/books/999');
 
+    expect(response.status).toBe(404);
+    expect(response.body).toHaveProperty('error');
+});
+    
 });
