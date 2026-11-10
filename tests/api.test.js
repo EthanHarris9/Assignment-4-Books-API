@@ -1,7 +1,10 @@
+// Importing express app
 const request = require('supertest');
 const app = require('../server.js');
 
+// jest test using supertest
 describe('Book API', () => {
+    // Tests for GET
     test('should return all books', async () => {
     const response = await request(app).get('/api/books');
 
@@ -22,6 +25,7 @@ describe('Book API', () => {
     expect(response.status).toBe(404);
     expect(response.body).toHaveProperty('error');
 });
+    // Test for POST
     test('should create a new book', async () => {
     const newBook = {
         title: "Beloved",
@@ -38,5 +42,22 @@ describe('Book API', () => {
         expect(response.body).toHaveProperty('id');
     expect(response.body.title).toBe('Beloved');
 });
+    // Test for PUT
+    test('should update existing book', async () => {
+    const updatedBook = {
+        title: "The Great Gatsby",
+        author: "F. Scott Fitsgerald",
+        genre: "Fiction",
+        copiesAvailable: 1
+    };
+
+    const response = await request(app)
+        .post('/api/books/1')
+        .send(updatedBook);
+  
+        expect(response.status).toBe(200);
+        expect(response.body.copiesAvailable).toBe(1);
+});
+
 
 });
